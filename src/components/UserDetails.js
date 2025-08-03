@@ -26,6 +26,7 @@ const UserDetails = () => {
       <p>Email: {user.email}</p>
       <p>Phone: {user.phone}</p>
       <p>Website: {user.website}</p>
+  <a href="/" className="btn">Back</a>
     </div>
   );
 };
