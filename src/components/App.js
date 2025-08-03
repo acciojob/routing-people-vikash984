@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserList from "./UserList";
 import UserDetails from "./UserDetails";
-import "../styles/App.css";
 
 const App = () => {
   return (
