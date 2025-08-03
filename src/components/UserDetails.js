@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const UserDetails = () => {
   const { id } = useParams();
@@ -7,26 +7,36 @@ const UserDetails = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setUser(null);
-    setLoading(true);
-    fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchUserDetails = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+        const data = await response.json();
         setUser(data);
+      } catch (error) {
+        console.error('Failed to fetch user details:', error);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    fetchUserDetails();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <div>User not found.</div>;
+  }
 
   return (
     <div>
-      <p>Name: {user.name}</p>
-      <p>Username: {user.username}</p>
-      <p>Email: {user.email}</p>
-      <p>Phone: {user.phone}</p>
-      <p>Website: {user.website}</p>
-  <a href="/" className="btn">Back</a>
+      <h2>{user.name}</h2>
+      <p><strong>Username:</strong> {user.username}</p>
+      <p><strong>Email:</strong> {user.email}</p>
+      <p><strong>Phone:</strong> {user.phone}</p>
+      <p><strong>Website:</strong> {user.website}</p>
     </div>
   );
 };
